@@ -1,22 +1,23 @@
 # coqodaq
 Restaurant Booking API
 
+#### Tools
+Migrations - https://github.com/pressly/goose
+SQL Queries - https://docs.sqlc.dev/en/latest/
 
 #### Migrations
     - goose postgres "user=postgres dbname=coqodaq sslmode=disable" status
     - goose postgres postgres://postgres:@localhost:5431/coqodaq up
 
-
 ##### Creating New Model
-    - Step 1) Create New Schema
-    - Step 2) Create Query
-    - Step 3) Run `sqlc generate`
-
+    - Step 1) Create New Schema in `sql/schema`
+    - Step 2) Run the migration
+    - Step 3) Create Queries in `sql/queries`
+    - Step 4) Run `sqlc generate`
 
 ##### DB Models
 
 Example Request Body
-
 ```
 Create Reservation
 
