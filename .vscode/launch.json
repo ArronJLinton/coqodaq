@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Go Server",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}/main.go",
+      "args": [],
+      "env": {},
+      "cwd": "${workspaceFolder}",
+      "buildFlags": "",
+    //   "port": 8080,
+      "showLog": true,
+      "trace": "verbose",
+      "dlvToolPath": "${env:HOME}/go/bin/dlv"
+    },
+    {
+      "name": "Attach to Go Process",
+      "type": "go",
+      "request": "attach",
+      "mode": "remote",
+      "remotePath": "", 
+    //   "port": 2345,
+    //   "host": "127.0.0.1",
+      "apiVersion": 2,
+      "showLog": true,
+      "trace": "verbose"
+    }
+  ]
+}
