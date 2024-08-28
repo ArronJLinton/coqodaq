@@ -11,7 +11,6 @@
       "env": {},
       "cwd": "${workspaceFolder}",
       "buildFlags": "",
-    //   "port": 8080,
       "showLog": true,
       "trace": "verbose",
       "dlvToolPath": "${env:HOME}/go/bin/dlv"
@@ -22,8 +21,6 @@
       "request": "attach",
       "mode": "remote",
       "remotePath": "", 
-    //   "port": 2345,
-    //   "host": "127.0.0.1",
       "apiVersion": 2,
       "showLog": true,
       "trace": "verbose"

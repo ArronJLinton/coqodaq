@@ -24,7 +24,8 @@ func (config *Config) GetRestaurantsByDietaryRestrictionsAndTableCapacity(w http
 		return
 	}
 	defer r.Body.Close()
-	restaurants, err := config.DB.GetRestaurantsByDietaryRestrictionsAndTableCapacity(r.Context(), database.GetRestaurantsByDietaryRestrictionsAndTableCapacityParams{
+	restaurants, err := config.DB.GetRestaurantsByDietaryRestrictionsAndTableCapacity(r.Context(), 
+	database.GetRestaurantsByDietaryRestrictionsAndTableCapacityParams{
 		Capacity:              params.Capacity,
 		DietaryRestrictions:   params.DietaryRestrictions,
 	})
@@ -39,12 +40,13 @@ func (config *Config) GetRestaurantsByDietaryRestrictionsAndTableCapacity(w http
 		respondWithError(w, http.StatusBadRequest, fmt.Sprintf("Error getting user reservations: %s", err))
 		return
 	}
-
+	// TODO: Check if there are any reservations that conflict with the requested time
+		// Need a query that returns available tables at restaurants that are not reserved at the requested time
 	// Check if the user has any reservations that conflict with the requested time within 2 hours(before/after)
 	if len(userReservations) > 0 {
 		for _, resy := range userReservations {
-			if resy.Time.Add(-2 * time.Hour).Before(params.Time) || resy.Time.Add(2 * time.Hour).After(params.Time) || params.Time == resy.Time {
-				respondWithJSON(w, http.StatusBadRequest, struct{Message string}{ Message: "You have an existing reservation within 2 hours of this time. Please select another time or cancel your exisiting reservation."})
+			if isWithinTwoHours(resy.Time, params.Time) {
+				respondWithJSON(w, http.StatusOK, struct{Message string}{ Message: "You have an existing reservation within 2 hours of this time. Please select another time or cancel your exisiting reservation."})
 				return
 			}
 		}
@@ -54,3 +56,9 @@ func (config *Config) GetRestaurantsByDietaryRestrictionsAndTableCapacity(w http
 	}
 }
 
+func isWithinTwoHours(referenceTime time.Time, checkTime time.Time) bool {
+	// Calculate the difference between the two times
+	diff := checkTime.Sub(referenceTime)
+	// Check if the difference is within the range of -2 hours to +2 hours
+	return diff >= -2*time.Hour && diff <= 2*time.Hour
+}
