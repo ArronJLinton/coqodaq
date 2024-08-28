@@ -20,7 +20,7 @@ func New(config Config) http.Handler {
 	// reservation routes
 	reservationRouter := chi.NewRouter()
 	reservationRouter.Post("/create", config.CreateReservation)
-	reservationRouter.Delete("/delete", config.CreateReservation)
+	reservationRouter.Delete("/delete", config.DeleteReservation)
 
 	router.Mount("/reservation", reservationRouter)
 	router.Mount("/restaurants", restaurantRouter)

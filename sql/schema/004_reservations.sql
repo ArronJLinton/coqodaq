@@ -5,9 +5,9 @@ CREATE TABLE reservations (
   name VARCHAR(50) NOT NULL,
   party_size INT NOT NULL,
   time TIMESTAMPTZ NOT NULL,
-  restaurant_id serial references restaurants(id) NOT NULL,
-  table_id serial references tables(id) NOT NULL,
-  user_id serial references users(id) NOT NULL,
+  restaurant_id INT NOT NULL,
+  table_id INT NOT NULL,
+  user_id INT NOT NULL,
   is_active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
