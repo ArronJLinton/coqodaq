@@ -50,6 +50,30 @@ func (q *Queries) CreateReservation(ctx context.Context, arg CreateReservationPa
 	return i, err
 }
 
+const deleteReservation = `-- name: DeleteReservation :one
+DELETE FROM reservations
+	WHERE id=$1
+RETURNING id, name, party_size, time, restaurant_id, table_id, user_id, is_active, created_at, updated_at
+`
+
+func (q *Queries) DeleteReservation(ctx context.Context, id int32) (Reservation, error) {
+	row := q.db.QueryRowContext(ctx, deleteReservation, id)
+	var i Reservation
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.PartySize,
+		&i.Time,
+		&i.RestaurantID,
+		&i.TableID,
+		&i.UserID,
+		&i.IsActive,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const getReservationsByUserId = `-- name: GetReservationsByUserId :many
 SELECT
     res.user_id,

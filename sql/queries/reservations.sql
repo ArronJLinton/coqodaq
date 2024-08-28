@@ -15,3 +15,9 @@ LEFT JOIN
 WHERE 
     res.is_active = true AND res.user_id = $1;
 
+-- name: DeleteReservation :one
+DELETE FROM reservations
+	WHERE id=$1
+RETURNING *;
+
+
