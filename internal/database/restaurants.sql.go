@@ -8,7 +8,6 @@ package database
 import (
 	"context"
 	"database/sql"
-	"time"
 
 	"github.com/lib/pq"
 )
@@ -88,8 +87,6 @@ WHERE
 type GetRestaurantsByDietaryRestrictionsAndTableCapacityParams struct {
 	Capacity            int32
 	DietaryRestrictions []string
-	Time time.Time
-	UserId int32
 }
 
 type GetRestaurantsByDietaryRestrictionsAndTableCapacityRow struct {

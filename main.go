@@ -55,16 +55,16 @@ type Config struct {
 }
 
 func main() {
-	// Initialize the configuration
+	// Initialize app configuration with env variables
 	c := config.InitConfig()
-	// Connect to DB
+	// Connection to DB
 	conn, err := sql.Open("postgres", c.DB_URL)
 	if err != nil {
 		log.Fatal("Failed to connect to Database - ", err)
 	}
 	// Create router
 	router := chi.NewRouter()
-	// setup cors
+	// Setup cors
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", ";http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -78,7 +78,6 @@ func main() {
 		DB:             database.New(conn),
 	})
 	router.Mount("/api", apiRouter)
-
 	server := &http.Server{
 		Handler: router,
 		Addr:    ":" + c.PORT,
